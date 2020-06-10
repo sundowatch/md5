@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MD5 Hash Generator">
+    <title>MD5</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 offset-lg-2">
+                <div class="form-group" style="margin-top: 50px;">
+                    <label for="plain">Plain Text</label>
+                    <input type="text" class="form-control" id="plain">
+                </div>
+                
+                <div class="alert alert-warning" id="hash"
+                    style="margin-top: 100px; text-align: center; font-size: 2rem; border-radius: 7px;">Hash Text will
+                    be here</div>
+                <div class="alert alert-success d-none" id="copied">Copied</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js">
+    </script>
+    <script type="text/javascript">
+        $('#plain').on('input', function () {
+            let hash = CryptoJS.MD5($('#plain').val()).toString();
+            $('#hash').html(hash);
+        });
+        const copyToClipboard = str => {
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        };
+
+        $('#hash').on('click', function(){
+            copyToClipboard($(this).html());
+            $('#copied').addClass("d-block");
+            setTimeout(() => {
+                $('#copied').removeClass("d-block");
+            }, 3000);
+        });
+
+
+    </script>
+</body>
+
+</html>
